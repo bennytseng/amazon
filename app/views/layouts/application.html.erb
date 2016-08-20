@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= link_to("Home", root_path) %>
+    <%= link_to "About", about_path %>
+    <%= link_to "Contact Us", new_contact_path %>
+    <% if user_signed_in? %>
+      welcome <%= current_user.full_name %>
+      <%= link_to 'Sign Out', sessions_path, method: :delete %>
+      <%= link_to 'Sign Up', new_user_path %>
+      <%= link_to 'Sign In', new_session_path %>
+      <% end %>
+    <hr>
+    <div flash[:notice] %>
+      <%= flash[:notice] %>
+    <div>
+    <%= yield %>
+  </body>
+</html>

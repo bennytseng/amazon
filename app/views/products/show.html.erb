@@ -1,0 +1,36 @@
+<h1> Product Information </h1>
+
+<h1><%= @product.title %></h1>
+
+<p><%= @product.description %></p>
+
+<p><%= @product.price %></p>
+
+<p><%= @product.created_at %></p>
+
+<%= link_to "Delete", product_path(@product), method: :delete, data: {confirm: "Are you sure?"} %>
+<%= link_to "Edit", edit_product_path(@product) %>
+
+<h2> Create a review </h2>
+<%= @review.errors.full_messages.join("") %>
+<%= form_for @review, url:
+
+product_reviews_path(@product) do |f| %>
+<div>
+  <%= f.label :stars %>
+  <%= f.text_field :stars %>
+  <%= f.text_area :body %>
+</div>
+<%= f.submit %>
+<% end %>
+
+<h2>Reviews</h2>
+<% @product.reviews.each do |rev| %>
+  <%= User.find(rev.user_id).full_name + ':' %>
+  <%= rev.stars %>
+  <%= rev.body %>
+  <%= link_to 'delete', product_review_path(@product, rev),
+                        method: :delete,
+                        data: {confirm: 'Are you sure?'} %>
+  <hr>
+<% end %>
